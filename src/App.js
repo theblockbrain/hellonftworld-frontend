@@ -1,23 +1,11 @@
-import logo from './logo.svg';
 import './App.css';
+import CollectionCard from './components/CollectionCard';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1 className="welocme">Welcome to the better pricing estimator!</h1>
+      <CollectionCard name="Azuki" collection_address="0xed5af388653567af2f388e6224dc7c4b3241c544" />
     </div>
   );
 }
