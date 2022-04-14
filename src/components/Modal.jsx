@@ -1,4 +1,5 @@
 import "./Modal.css";
+import { imglink } from "./imglink";
 
 const Modal = (props) => {
   return (
@@ -6,7 +7,7 @@ const Modal = (props) => {
       <div className="modal">
         <div
           className="modal-img"
-          style={{ backgroundImage: `url(${props.token.image})` }}
+          style={{ backgroundImage: `url(${imglink(props.token.image)})` }}
         ></div>
         <div className="modal-details">
           <div className="modal-title">{props.token.name}</div>
@@ -19,7 +20,7 @@ const Modal = (props) => {
           <div className="modal-divider"></div>
           <div className="modal-attributes">
             {props.token.attributes.map((trait) => (
-              <div className="modal-trait-card">
+              <div className="modal-trait-card" key={trait.trait_type}>
                 <div className="modal-trait-name">{trait.trait_type}</div>
                 <div className="modal-trait-value">
                   {trait.value !== "None" ? trait.value : "🚫"}

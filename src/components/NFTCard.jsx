@@ -1,11 +1,12 @@
 import "./NFTCard.css";
+import { imglink } from "./imglink";
 
 const NFTCard = (props) => {
   return (
     <div className="nft-card" onClick={() => props.onOpenModal(props.token)}>
       <div
         className="nft-img"
-        style={{ backgroundImage: `url(${props.meta["image"]})` }}
+        style={{ backgroundImage: `url(${imglink(props.meta["image"])})` }}
       ></div>
       <div className="nft-card-info">
         <div className="nft-tokenid"># {props.meta["_id"]}</div>

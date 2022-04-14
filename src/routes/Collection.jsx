@@ -23,7 +23,7 @@ const Collection = (props) => {
   let params = useParams();
 
   useEffect(() => {
-    if (params.collection !== collectionAddress) {
+    if (params.collection_address !== collectionAddress) {
       setCollectionAddress(params.collection_address);
     }
   }, [params.collection_address]);
@@ -122,14 +122,16 @@ const Collection = (props) => {
       const itemcount = filtered.length;
 
       if (itemcount > 25) {
-        setFilteredData(filtered.slice(0, 25));
+        setFilteredData(
+          filtered.slice(0 + currentPage * 25, 25 + currentPage * 25)
+        );
         setMaxPage(Math.ceil(itemcount / 25));
       } else {
         setFilteredData(filtered);
         setMaxPage(0);
       }
     }
-  }, [meta, sorting, sortAsc, tokenIDFilterArray]);
+  }, [meta, sorting, sortAsc, tokenIDFilterArray, currentPage]);
 
   useEffect(() => {
     console.log(modalContext);
