@@ -5,10 +5,18 @@ const Modal = (props) => {
   return (
     <div className="modal-container" onClick={() => props.onCloseModal()}>
       <div className="modal">
-        <div
-          className="modal-img"
-          style={{ backgroundImage: `url(${imglink(props.token.image)})` }}
-        ></div>
+        {props.token["image"].includes(".mp4") ? (
+          <div className="modal-video-container">
+            <video className="modal-video" autoPlay loop muted>
+              <source src={props.token["image"]} type="video/mp4" />
+            </video>
+          </div>
+        ) : (
+          <div
+            className="modal-img"
+            style={{ backgroundImage: `url(${imglink(props.token.image)})` }}
+          ></div>
+        )}
         <div className="modal-details">
           <div className="modal-title">{props.token.name}</div>
           <div className="modal-rarity">

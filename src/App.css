@@ -12,6 +12,7 @@ body {
   display: inline-block;
   width: 80px;
   height: 80px;
+  transform: translate(-50%, -50%);
 }
 
 .lds-dual-ring:after {
@@ -44,4 +45,69 @@ body {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.navigation-area{
+  width: 1000px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 20px;
+  row-gap: 50px;
+}
+
+.diy-area {
+  margin-top: 80px;
+}
+
+.diy-heading {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.diy-disclaimer{
+  max-width: 800px;
+  margin: auto;
+  padding: 10px;
+  border: 2px solid rgb(151, 0, 0);
+  font-size: 18px;
+}
+
+.diy-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 420px;
+  margin: auto;
+  margin-top: 30px;
+}
+
+.diy-form label {
+  font-weight: 500;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.diy-form input {
+  margin-bottom: 10px;
+  background-color: rgba(17, 4, 17, 0);
+  border: 2px solid orange;
+  border-radius: 5px;
+  color: orange;
+  height: 31px;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 2px 15px;
+}
+
+.diy-button {
+  color: orange;
+  border: 2px solid orange;
+  background-color: rgba(17, 4, 17, 0);
+  padding: 8px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: 700;
+  height: 100%;
+  font-size: 18px;
 }

@@ -23,12 +23,16 @@
   display: flex;
 }
 
-.modal-img{
+.modal-img, .modal-video-container{
   width: 50%;
   height: 0;
   padding-bottom: 50%;
   background-size: cover;
   border-right: 2px solid orange;
+}
+
+.modal-video{
+  width: 100%;
 }
 
 .modal-details {

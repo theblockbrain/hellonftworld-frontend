@@ -7,13 +7,17 @@
   cursor: pointer;
 }
 
-.nft-img {
+.nft-img, .nft-video-container {
   width: 100%;
   height: 0px;
   padding-bottom: 100%;
   background-size: cover;
   border-radius: 6px 6px 0px 0px;
   border-bottom: 2px solid white;
+}
+
+.nft-video {
+  width: 100%;
 }
 
 .nft-card-info{

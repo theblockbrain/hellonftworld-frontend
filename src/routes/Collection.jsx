@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Modal from "../components/Modal";
 import NFTCard from "../components/NFTCard";
 import PaginationNav from "../components/PaginationNav";
@@ -28,7 +28,7 @@ const Collection = (props) => {
     }
   }, [params.collection_address]);
 
-  useEffect(() => {
+  /*  useEffect(() => {
     const fetchEstimates = async (collection_address) => {
       const res = await fetch(
         `http://localhost:8000/estimates/${collection_address}`
@@ -43,12 +43,12 @@ const Collection = (props) => {
         setEstimates(estimates);
       });
     }
-  }, [collectionAddress]);
+  }, [collectionAddress]); */
 
   useEffect(() => {
     const fetchMeta = async (collection_address) => {
       const res = await fetch(
-        `http://localhost:8000/rarity/${collection_address}`
+        `http://localhost:8000/front-end/${collection_address}`
       );
       const meta = await res.json();
 
@@ -80,11 +80,11 @@ const Collection = (props) => {
   }, [collectionAddress]);
 
   useEffect(() => {
-    if (meta.length > 0 && estimates.length > 0) {
+    if (meta.length > 0 /* && estimates.length > 0 */) {
       console.log(meta);
       setLoading(false);
 
-      const mergeByProperty = (target, source, target_prop, source_prop) => {
+      /* const mergeByProperty = (target, source, target_prop, source_prop) => {
         source.forEach((sourceElement) => {
           let targetElement = target.find((targetElement) => {
             return sourceElement[source_prop] === targetElement[target_prop];
@@ -95,7 +95,7 @@ const Collection = (props) => {
         });
       };
 
-      mergeByProperty(meta, estimates, "_id", "token_id");
+      mergeByProperty(meta, estimates, "_id", "token_id"); */
 
       console.log(meta);
     }
@@ -133,10 +133,6 @@ const Collection = (props) => {
     }
   }, [meta, sorting, sortAsc, tokenIDFilterArray, currentPage]);
 
-  useEffect(() => {
-    console.log(modalContext);
-  }, [modalContext]);
-
   const changeCurrentPage = (newPage) => {
     setCurrentPage(newPage);
   };
@@ -152,6 +148,9 @@ const Collection = (props) => {
           ? OSDetails.collection.name
           : props.collection_address}
       </h1>
+      <Link to="/" className="home-link">
+        <div className="home-button">Country Roads, ...</div>
+      </Link>
       {loading ? (
         <div className="loading-wrapper">
           <div className="lds-dual-ring"></div>
