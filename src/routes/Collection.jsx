@@ -48,7 +48,7 @@ const Collection = (props) => {
   useEffect(() => {
     const fetchMeta = async (collection_address) => {
       const res = await fetch(
-        `https://3.73.6.168:8888/front-end/${collection_address}`
+        `http://3.73.6.168:8888/front-end/${collection_address}`
       );
       const meta = await res.json();
 
