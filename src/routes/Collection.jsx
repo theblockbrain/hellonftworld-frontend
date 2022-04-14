@@ -7,6 +7,7 @@ import PaginationNav from "../components/PaginationNav";
 import "./Collection.css";
 
 const Collection = (props) => {
+  const [collectionAddress, setCollectionAddress] = useState("");
   const [estimates, setEstimates] = useState([]);
   const [meta, setMeta] = useState([]);
   const [OSDetails, setOSDetails] = useState({});
@@ -22,6 +23,12 @@ const Collection = (props) => {
   let params = useParams();
 
   useEffect(() => {
+    if (params.collection !== collectionAddress) {
+      setCollectionAddress(params.collection_address);
+    }
+  }, [params.collection_address]);
+
+  useEffect(() => {
     const fetchEstimates = async (collection_address) => {
       const res = await fetch(
         `http://localhost:8000/estimates/${collection_address}`
@@ -31,12 +38,12 @@ const Collection = (props) => {
       return estimates;
     };
 
-    if (params && params.collection_address) {
-      fetchEstimates(params.collection_address).then((estimates) => {
+    if (collectionAddress && estimates.length === 0) {
+      fetchEstimates(collectionAddress).then((estimates) => {
         setEstimates(estimates);
       });
     }
-  }, [params]);
+  }, [collectionAddress]);
 
   useEffect(() => {
     const fetchMeta = async (collection_address) => {
@@ -48,12 +55,12 @@ const Collection = (props) => {
       return meta;
     };
 
-    if (params && params.collection_address) {
-      fetchMeta(params.collection_address).then((meta) => {
+    if (collectionAddress && meta.length === 0) {
+      fetchMeta(collectionAddress).then((meta) => {
         setMeta(meta);
       });
     }
-  }, [params]);
+  }, [collectionAddress]);
 
   useEffect(() => {
     const fetchOSInfo = async (collection_address) => {
@@ -65,12 +72,12 @@ const Collection = (props) => {
       return os_details;
     };
 
-    if (params && params.collection_address) {
-      fetchOSInfo(params.collection_address).then((details) => {
+    if (collectionAddress && Object.keys(OSDetails).length === 0) {
+      fetchOSInfo(collectionAddress).then((details) => {
         setOSDetails(details);
       });
     }
-  }, [params]);
+  }, [collectionAddress]);
 
   useEffect(() => {
     if (meta.length > 0 && estimates.length > 0) {
