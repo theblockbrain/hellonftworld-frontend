@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "BetterEstimates",
+  "name": "A better NFT Value estimator",
   "icons": [
     {
       "src": "favicon.ico",
