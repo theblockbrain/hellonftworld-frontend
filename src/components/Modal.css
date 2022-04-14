@@ -1,0 +1,132 @@
+.modal-container {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.562);
+}
+
+.modal {
+  background-color: rgb(17, 4, 17);
+  border: 2px solid orange;
+  border-radius: 20px;
+  width: 60vw;
+  height: 30vw;
+  min-width: 1000px;
+  min-height: 500px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  display: flex;
+}
+
+.modal-img{
+  width: 50%;
+  height: 0;
+  padding-bottom: 50%;
+  background-size: cover;
+  border-right: 2px solid orange;
+}
+
+.modal-details {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal-title{
+  margin-top: 20px;
+  font-size: 48px;
+  font-weight: 700;
+}
+
+.modal-rarity {
+  display: flex;
+  font-weight: 700;
+  align-items: flex-end;
+  margin-bottom: 20px;
+}
+
+.modal-rank {
+  font-size: 28px;
+  margin-right: 10px;
+}
+
+.modal-score{
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.modal-divider {
+  height: 2px;
+  width: 100%;
+  background-color: orange;
+}
+
+.modal-attributes{
+  margin-top: 20px;
+  width: 80%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 30px;
+  row-gap: 30px;
+  padding-right: 40px;
+  margin-bottom: 20px;
+
+  overflow-y: scroll;
+}
+
+.modal-trait-card{
+  width: 100%;
+  height: 50px;
+  position: relative;
+  background-color: rgb(189 174 180 / 83%);;
+  border-radius: 5px;
+}
+
+.modal-trait-name {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.modal-trait-value{
+  position: absolute;
+  bottom: 5px;
+  left: 10px;
+  max-height: 24px;
+}
+
+.modal-trait-score {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+  position: relative;
+  left: -10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: orange;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

@@ -1,0 +1,35 @@
+.pagination{
+  margin-top: 20px;
+  display: flex;
+  width: 100%;
+  justify-content: end;
+}
+
+.pagination_item, .pagination_dots {
+  width: auto;
+  padding: 8px 15px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  border-radius: 5px;
+  color: ghostwhite;
+  font-weight: 700;
+}
+
+.pagination_item{
+  margin: 0px 5px;
+  background-color: orange;
+  cursor: pointer;
+}
+
+.pagination_item:hover{
+  background-color: rgb(206, 134, 0);
+}
+
+.pagination_item.current{
+  background-color: rgb(206, 134, 0);
+}
+
+.pagination_item:last-child{
+  margin-right: 0px;
+}

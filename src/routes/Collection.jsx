@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Modal from "../components/Modal";
 import NFTCard from "../components/NFTCard";
+import PaginationNav from "../components/PaginationNav";
+
+import "./Collection.css";
 
 const Collection = (props) => {
   const [estimates, setEstimates] = useState([]);
@@ -8,6 +12,13 @@ const Collection = (props) => {
   const [OSDetails, setOSDetails] = useState({});
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [sorting, setSorting] = useState("_id");
+  const [sortAsc, setSortAsc] = useState(true);
+  const [tokenInput, setTokenInput] = useState("");
+  const [tokenIDFilterArray, setTokenIDFilterArray] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [maxPage, setMaxPage] = useState(0);
+  const [modalContext, setModalContext] = useState({});
   let params = useParams();
 
   useEffect(() => {
@@ -65,14 +76,65 @@ const Collection = (props) => {
     if (meta.length > 0 && estimates.length > 0) {
       console.log(meta);
       setLoading(false);
+
+      const mergeByProperty = (target, source, target_prop, source_prop) => {
+        source.forEach((sourceElement) => {
+          let targetElement = target.find((targetElement) => {
+            return sourceElement[source_prop] === targetElement[target_prop];
+          });
+          targetElement
+            ? Object.assign(targetElement, sourceElement)
+            : target.push(sourceElement);
+        });
+      };
+
+      mergeByProperty(meta, estimates, "_id", "token_id");
+
+      console.log(meta);
     }
   }, [meta, estimates]);
 
   useEffect(() => {
     if (meta.length > 0) {
-      setFilteredData(meta.slice(0, 51));
+      if (sortAsc) {
+        meta.sort((a, b) => parseFloat(a[sorting]) - parseFloat(b[sorting]));
+      } else {
+        meta.reverse((a, b) => parseFloat(a[sorting]) - parseFloat(b[sorting]));
+      }
+
+      let filtered = [];
+
+      if (tokenIDFilterArray.length > 0) {
+        filtered = meta.filter((token) =>
+          tokenIDFilterArray.includes(token["_id"].toString())
+        );
+      } else {
+        filtered = meta;
+      }
+
+      const itemcount = filtered.length;
+
+      if (itemcount > 25) {
+        setFilteredData(filtered.slice(0, 25));
+        setMaxPage(Math.ceil(itemcount / 25));
+      } else {
+        setFilteredData(filtered);
+        setMaxPage(0);
+      }
     }
-  }, [meta]);
+  }, [meta, sorting, sortAsc, tokenIDFilterArray]);
+
+  useEffect(() => {
+    console.log(modalContext);
+  }, [modalContext]);
+
+  const changeCurrentPage = (newPage) => {
+    setCurrentPage(newPage);
+  };
+
+  const clearModal = () => {
+    setModalContext({});
+  };
 
   return (
     <div className="collection">
@@ -81,23 +143,109 @@ const Collection = (props) => {
           ? OSDetails.collection.name
           : props.collection_address}
       </h1>
-      <div className="collection-container">
-        {loading ? (
-          <div className="loading-wrapper">
-            <div className="lds-dual-ring"></div>
+      {loading ? (
+        <div className="loading-wrapper">
+          <div className="lds-dual-ring"></div>
+        </div>
+      ) : (
+        <div className="collection-main">
+          <div className="collection-filters">
+            <form className="collection-filter-sorting">
+              <div className="filter-row">
+                <label htmlFor="sorting">Sort By:</label>
+                <div className="sorting-container">
+                  <div className="select">
+                    <select
+                      name="sorting"
+                      id="sorting"
+                      value={sorting}
+                      onChange={(e) => setSorting(e.target.value)}
+                    >
+                      <option value="_id">ID</option>
+                      <option value="rarity_rank">Rank</option>
+                      <option value="estimate">Estimate</option>
+                      <span className="focus"></span>
+                    </select>
+                  </div>
+                  <div
+                    className="sorting-button"
+                    onClick={() => {
+                      setSortAsc((prev) => !prev);
+                    }}
+                  >
+                    {sortAsc ? "ASC" : "DESC"}{" "}
+                  </div>
+                </div>
+              </div>
+              <div className="filter-row">
+                <label htmlFor="tokens" className="tokens">
+                  Search for Token ID:
+                </label>
+                <div className="tokenid_container">
+                  <input
+                    type="text"
+                    name="tokens"
+                    id="tokens"
+                    value={tokenInput}
+                    onChange={(e) => setTokenInput(e.target.value)}
+                  />
+                  <div
+                    className="add-button"
+                    onClick={() => {
+                      setTokenIDFilterArray((prev) => prev.concat(tokenInput));
+                      setTokenInput("");
+                    }}
+                  >
+                    ADD
+                  </div>
+                </div>
+                {tokenIDFilterArray.length > 0 && (
+                  <>
+                    <div className="acitve-token-filter">
+                      {tokenIDFilterArray.map((token) => (
+                        <div className="tokenpill">{token}</div>
+                      ))}
+                      <div
+                        className="reset-button"
+                        onClick={() => {
+                          setTokenIDFilterArray([]);
+                          setTokenInput("");
+                        }}
+                      >
+                        X
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+            </form>
           </div>
-        ) : (
-          filteredData.map((token) => (
-            <NFTCard
-              meta={token}
-              key={token["_id"]}
-              estimate={
-                estimates.filter((e) => e["token_id"] === token["_id"])[0]
-              }
-            />
-          ))
-        )}
-      </div>
+          <div className="collection-left-area">
+            <div className="collection-container">
+              {filteredData.map((token) => (
+                <NFTCard
+                  meta={token}
+                  key={token["_id"]}
+                  estimate={
+                    estimates.filter((e) => e["token_id"] === token["_id"])[0]
+                  }
+                  onOpenModal={() => setModalContext(token)}
+                />
+              ))}
+            </div>
+            {maxPage > 0 && (
+              <PaginationNav
+                currentPage={currentPage}
+                lastPage={maxPage}
+                onChangePage={changeCurrentPage}
+              />
+            )}
+          </div>
+          {modalContext && Object.keys(modalContext).length > 0 && (
+            <Modal token={modalContext} onCloseModal={clearModal} />
+          )}
+        </div>
+      )}
     </div>
   );
 };

@@ -1,24 +1,10 @@
-.collection {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-items: center;
-}
-
-.collection-container{
-  width: 800px;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  column-gap: 30px;
-  row-gap: 30px;
-}
-
 .nft-card {
   width: 100%;
   height: auto;
   border-radius: 10px;
   border: 2px solid white;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .nft-img {

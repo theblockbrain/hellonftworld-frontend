@@ -2,7 +2,7 @@ import "./NFTCard.css";
 
 const NFTCard = (props) => {
   return (
-    <div className="nft-card">
+    <div className="nft-card" onClick={() => props.onOpenModal(props.token)}>
       <div
         className="nft-img"
         style={{ backgroundImage: `url(${props.meta["image"]})` }}
